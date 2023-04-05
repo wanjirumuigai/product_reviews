@@ -10,4 +10,17 @@ class Product < ActiveRecord::Base
       user_id: user.id
     )
   end
+
+  def print_all_reviews
+    self
+      .reviews
+      .map do |review|
+        puts "Review for #{self.name} by #{review.user.name}: #{review.star_rating}. #{review.comment}"
+      end
+      .compact
+  end
+  def average_rating
+    rating = self.reviews.map { |rating| rating.star_rating }
+    rating.sum / rating.count
+  end
 end
